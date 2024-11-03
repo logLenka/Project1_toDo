@@ -1,15 +1,19 @@
 
 
-
+// Add event listener to the 'options_priority' dropdown
 document.getElementById('options_priority').addEventListener('change', function() {
+    // Update the 'textfield_priority' input with the selected value
     document.getElementById('textfield_priority').value = this.value;
 });
 
+// Add event listener to the 'options_status' dropdown
 document.getElementById('options_status').addEventListener('change', function() {
+    // Update the 'textfield_status' input with the selected value
     document.getElementById('textfield_status').value = this.value;
 });
 
 
+// Function to validate input fields
 function validateInput() {
     //try {
     let name = document.getElementById('textfield');
@@ -21,9 +25,9 @@ function validateInput() {
     name.style.borderColor = '';
     priority.style.borderColor = '';
     status.style.borderColor = '';
-
     document.getElementById('error_msg').innerHTML = '';
-    // validation
+
+    // Check if any field is empty
     if (name.value.length < 1 || priority.value.length < 1 || status.value.length < 1) {
         
         errorMsg = 'the field cannot be empty\n';
@@ -31,6 +35,7 @@ function validateInput() {
         else if (priority.value.length < 1){priority.style.borderColor = 'red';}
         else if (status.value.length < 1){status.style.borderColor = 'red';}
         
+        // Display error message
         var h = document.createElement("b") ;
         var t = document.createTextNode(errorMsg);
         h.appendChild(t);
@@ -39,8 +44,8 @@ function validateInput() {
     }
 
     else if (name.value.length > 20) {
+        // Truncate the name if it's too long
         name.value = name.value.substring(0,20);
-        // insertRows()
         
         saveData()
         clearTable('data')
@@ -49,8 +54,6 @@ function validateInput() {
     // return true
     
     else {
-        // insertRows()
-        
         saveData()
         clearTable('data')
         showdata()
@@ -84,6 +87,8 @@ function validateInput() {
 //     actionCell.innerHTML = '<button onclick="removeRow(this)">Remove</button>';
 // }
 
+
+// Function to remove a row from the table and localStorage
 function removeRow(button) {
     let JSONdata = JSON.parse(localStorage.getItem('formData1'));
     let row = button.parentNode.parentNode;
@@ -93,12 +98,13 @@ function removeRow(button) {
     row.parentNode.removeChild(row);
 }
 
+// Initialize localStorage if it doesn't exist
 if(localStorage.getItem('formData1') === null) {
     let JSONdata=[];
     localStorage.setItem('formData1', JSON.stringify(JSONdata))
 }
 
-
+// Function to save data to localStorage
 function saveData() {
     
     let JSONdata = JSON.parse(localStorage.getItem('formData1'));
@@ -120,6 +126,7 @@ function saveData() {
     // alert('Data saved to localStorage!');
 }
 
+// Function to display data from localStorage in the table
 function showdata(){
     let JSONdata = JSON.parse(localStorage.getItem('formData1'));
 
@@ -128,10 +135,12 @@ function showdata(){
     let rows = []
     let row = []
 
+    // Prepare rows data
     for (let i = 0; i < JSONdata.length; i++) {
         rows.push([JSONdata[i].task, JSONdata[i].priority, JSONdata[i].status])
     }
 
+    // Insert rows into the table
     for (let i = 0; i < rows.length; i++) {
         row = rows[i]
         let newRow = table.insertRow();
@@ -148,6 +157,7 @@ function showdata(){
     // }
 }
 
+// Function to clear the table
 function clearTable(tableId) {
     var table = document.getElementById(tableId);
 
@@ -162,5 +172,6 @@ function clearTable(tableId) {
     }
 }
 
+// Display data on page load
 showdata()
 
