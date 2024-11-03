@@ -27,7 +27,9 @@ function validateInput() {
     if (name.value.length < 1 || priority.value.length < 1 || status.value.length < 1) {
         
         errorMsg = 'the field cannot be empty\n';
-        name.style.borderColor = 'red';
+        if (name.value.length < 1){name.style.borderColor = 'red';}
+        else if (priority.value.length < 1){priority.style.borderColor = 'red';}
+        else if (status.value.length < 1){status.style.borderColor = 'red';}
         
         var h = document.createElement("b") ;
         var t = document.createTextNode(errorMsg);
